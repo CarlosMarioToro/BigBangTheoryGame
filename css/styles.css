@@ -1,0 +1,320 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box
+}
+
+body {
+    background-image: url("/Imagenes/Atomo1.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    /* background-color: #9C9EFE; */
+}
+/*TITULO*/
+.titulo {
+    font-variant: small-caps;
+    text-align: center;
+    font-size: 48px;
+    width: 520px;
+    height: 50px;
+    border-radius: 10px; 
+    margin: 0 auto;
+    color: white;
+}
+.bang {
+    color: red;
+}
+.i {
+    font-variant: normal;
+}
+
+#seleccionar-personaje, #seleccionar-ataque{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.subtitulo {
+    color: #14C38E;
+    font-variant: small-caps;
+    font-size: 32px;
+}
+
+.tarjetas {
+    display: flex;
+    height: 400px;
+    width: 500px;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.tarjeta-de-personaje label {
+    width: 40%;
+    background: green;
+    height: 30%;
+}
+.tarjeta-de-personaje {
+    cursor: pointer;
+    color: #F7ECDE;
+    width: 100px;
+    height: 100px;
+    padding: 5px 14px;
+    margin: 5px;
+    border-radius: 10px; 
+    border: 2px solid #3f5b91;
+    background-color: rgba(74,154,178,0.5);
+    /* background-image: radial-gradient(circle, #3f5b91, #387ba6, #4a9ab2, #70b7bb, #9ed2c6); */
+}
+.tarjeta-de-personaje img {
+    width: 45px;
+}
+.tarjeta-de-personaje:hover {
+    border: 3px solid  #9ed2c6;
+    background-image: radial-gradient(circle, #9ed2c6, #70b7bb, #4a9ab2, #387ba6, #3f5b91);
+}
+
+input:checked + label {
+    border: 3px solid #3f5b91;
+    background-image: radial-gradient(circle, #9ed2c6, #70b7bb, #4a9ab2, #387ba6, #3f5b91);
+}
+input {
+    display: none;
+}
+
+button { 
+    cursor: pointer;
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border-color: #EB1D36;
+    width: 100px;
+    height: 100px;
+    margin: 5px;
+    background-color: rgba(230,0,148,0.5);
+    /* background-image: radial-gradient(circle, #eb1d36, #f20063, #e60094, #c108c7, #7248f3); */
+}
+#btn-text {
+    display: none;
+}
+#boton-personaje, #boton-reiniciar { 
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    border-color: #EB1D36;
+    width: 140px;
+    height: 50px;
+    margin-top: 10px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif
+}
+
+#ver-mapa{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* #mapa {
+    border: 2px solid white;
+} */
+
+#ver-mapa button {
+    height: 20px;
+    width: 70px;
+}
+
+#mensajes {
+    display: inline-block;
+    width:  280px;background-color: rgba(235,29,54,0.5);
+    border: 3px groove #EB1D36;
+    /* background-image: radial-gradient(circle, #eb1d36, #f20063, #e60094, #c108c7, #7248f3); */
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.ataques {
+    width: 80%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+    justify-content: center;
+    grid-gap: 15px;
+    margin-top: 15px;
+    background-color: transparent;
+}
+
+#victorias-jugador, #victorias-enemigo {
+    font-size: 40px;
+    color: #F94892;
+}
+
+#personaje-jugador, #personaje-enemigo {
+    font-size: 40px;
+    color: #1C3879;
+}
+
+#ataques-jugador, #ataques-enemigo {
+    color: #31087B;
+}
+
+#ataques-jugador p {
+    border: 3px groove #66cc66;
+    border-radius: 20px;
+}
+
+#ataques-enemigo p{
+    border: 3px groove #66cc66;
+    border-radius: 20px;
+}
+#turno {
+    height: 65px;
+    margin-top: 20px;
+    color: #31087B;
+}
+
+#tituloTurno, #resultadoAtaques {
+    height: 10px;
+    margin-top: 20px;
+    color: #F94892;
+}
+
+#turno p{
+    border: 3px groove #66cc66;
+    border-radius: 20px;
+}
+
+#resultadoAtaque p{
+    border: 3px groove #66cc66;
+    border-radius: 20px;
+    color: #31087B;
+}
+
+@media (min-width: 1240px) {
+    #personaje-jugador {
+        font-size: 40px;
+    }    
+    #personaje-enemigo {
+        font-size: 40px;
+    }
+    #resultadoAtaques {
+        height: 57px;
+        margin-top: 20px;
+    }
+    #tituloTurno {
+        height: 57px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 1240px) {
+    #personaje-jugador {
+        font-size: 40px;
+    }    
+    #personaje-enemigo {
+        font-size: 40px;
+    }
+    #resultadoAtaques {
+        height: 57px;
+        margin-top: 20px;
+    }
+    #tituloTurno {
+        height: 57px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 990px) {
+    #personaje-jugador {
+        font-size: 30px;
+    }    
+    #personaje-enemigo {
+        font-size: 30px;
+    }
+    #resultadoAtaques, #tituloTurno {
+        height: 45px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width:860px) {
+    #tituloTurno, #turno {
+        display: none;
+        width: 0px;
+    } 
+    .turno {
+        display: none;
+    }
+}
+
+@media (max-width: 735px) {
+    #personaje-jugador {
+        font-size: 30px;
+    }    
+    #personaje-enemigo {
+        font-size: 30px;
+    }
+    #tituloTurno, #turno {
+        display: none;
+        width: 0px;
+    }    
+    #resultadoAtaques {
+        height: 45px;
+        margin-top: 20px;
+    }
+    .ataques {
+        grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+    }
+}
+
+@media (max-width: 590px) {
+    .ataques {
+        grid-template-columns: repeat(auto-fit, minmax(5rem, 1fr));
+    }
+    #personaje-enemigo {
+        font-size: 25px;
+    }
+    #personaje-jugador {
+        font-size: 25px;
+    }    
+    #resultadoAtaques {
+        height: 38px;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 415px) {
+    .titulo {
+        width: 304px;       
+    }
+    .subtitulo {
+        margin-top: 72px;
+    }
+    .tarjetas {
+        width: 280px;
+        height: 500px;
+        flex-direction: column; 
+    }
+    #resultadoAtaques, #resultadoAtaque, .resultado{
+        display: none;
+        width: 0px;
+    }    
+    .botonArma {
+        display: flex;
+        height: 350px;
+        width: 408px;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        align-content: stretch;
+        margin-top: 16px;
+    }
+}

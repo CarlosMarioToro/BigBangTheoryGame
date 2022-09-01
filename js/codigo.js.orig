@@ -1,0 +1,474 @@
+<<<<<<< HEAD
+let ataqueJugador
+let ataqueEnemigo
+let victoriasJugador = 0
+let victoriasEnemigo = 0
+
+function iniciarJuego() {
+    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+    sectionSeleccionarAtaque.style.display = 'none'
+
+    let sectionReinciar = document.getElementById('reiniciar')
+    sectionReinciar.style.display = 'none'
+
+    let botonPersonajeJugador = document.getElementById('boton-personaje')
+    botonPersonajeJugador.addEventListener('click', seleccionarPersonajeJugador)
+
+    let botonPiedra = document.getElementById('boton-piedra')
+    botonPiedra.addEventListener('click',ataquePiedra)
+    let botonPapel = document.getElementById('boton-papel')
+    botonPapel.addEventListener('click',ataquePapel)
+    let botonTijera = document.getElementById('boton-tijera')
+    botonTijera.addEventListener('click',ataqueTijera)
+    let botonLagarto = document.getElementById('boton-lagarto')
+    botonLagarto.addEventListener('click',ataqueLagarto)
+    let botonSpock = document.getElementById('boton-spock')
+    botonSpock.addEventListener('click',ataqueSpock)
+    
+    let botonReiniciar = document.getElementById('boton-reiniciar')
+    botonReiniciar.addEventListener('click',reiniciarJuego)
+}
+
+function seleccionarPersonajeJugador() {
+    let sectionSeleccionarPersonaje = document.getElementById('seleccionar-personaje')
+    sectionSeleccionarPersonaje.style.display = 'none'
+
+    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+    sectionSeleccionarAtaque.style.display = 'block'
+
+    /*alert("SELECCIONASTE TU PERSONAJE")*/
+    let inputAmy = document.getElementById('amy')
+    let inputBernadette = document.getElementById('bernadette')
+    let inputHoward = document.getElementById('howard')
+    let inputLeonard = document.getElementById('leonard')
+    let inputPenny = document.getElementById('penny')
+    let inputRajesh = document.getElementById('rajesh')
+    let inputSheldon = document.getElementById('sheldon')
+    let inputStuart = document.getElementById('stuart')
+    let spanPersonajeJugador = document.getElementById('personaje-jugador')
+
+    if (inputAmy.checked) {
+        spanPersonajeJugador.innerHTML = 'Ammy'
+        personajeJugador = 1
+    } else if (inputBernadette.checked) {
+        spanPersonajeJugador.innerHTML = 'Bernadette'
+        personajeJugador = 2
+    } else if (inputHoward.checked) {
+        spanPersonajeJugador.innerHTML = 'Howard'
+        personajeJugador = 3
+    } else if (inputLeonard.checked) {
+        spanPersonajeJugador.innerHTML = 'Leonard'
+        personajeJugador = 4
+    } else if (inputPenny.checked) {
+        spanPersonajeJugador.innerHTML = 'Penny'
+        personajeJugador = 5
+    } else if (inputRajesh.checked) {
+        spanPersonajeJugador.innerHTML = 'Rajesh'
+        personajeJugador = 6
+    } else if (inputSheldon.checked) {
+        spanPersonajeJugador.innerHTML = 'Sheldon'
+        personajeJugador = 7
+    } else if (inputStuart.checked) {
+        spanPersonajeJugador.innerHTML = 'Stuart'
+        personajeJugador = 8
+    } else {
+        alert("Debes Seleccionar un Personaje")
+    }
+    seleccionarPersonajeEnemigo()
+}
+
+function seleccionarPersonajeEnemigo() {
+    let enemigoAleatorio = aleatorio(1, 8)
+    let spanPersonajeEnemigo = document.getElementById('personaje-enemigo')
+
+    /* NO REPITO EL MISMO PERSONAJE */
+    while (personajeJugador == enemigoAleatorio) {
+        /*alert(enemigoAleatorio)*/
+        enemigoAleatorio = aleatorio(1, 8)
+    }
+
+    if (enemigoAleatorio == 1) {
+        spanPersonajeEnemigo.innerHTML = 'Ammy'
+    } else if (enemigoAleatorio == 2) {
+        spanPersonajeEnemigo.innerHTML = 'Bernadette'
+    } else if (enemigoAleatorio == 3) {
+        spanPersonajeEnemigo.innerHTML = 'Howard'
+    } else if (enemigoAleatorio == 4) {
+        spanPersonajeEnemigo.innerHTML = 'Leonard'
+    } else if (enemigoAleatorio == 5) {
+        spanPersonajeEnemigo.innerHTML = 'Penny'
+    } else if (enemigoAleatorio == 6) {
+        spanPersonajeEnemigo.innerHTML = 'Rajesh'
+    } else if (enemigoAleatorio == 7) {
+        spanPersonajeEnemigo.innerHTML = 'Sheldon'
+    } else {
+        spanPersonajeEnemigo.innerHTML = 'Stuart'
+    }
+}
+
+function ataquePiedra() {
+    ataqueJugador = 'PIEDRA'
+    ataqueAleatorioEnemigo()
+}
+
+function ataquePapel() {
+    ataqueJugador = 'PAPEL'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueTijera() {
+    ataqueJugador = 'TIJERA'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueLagarto() {
+    ataqueJugador = 'LAGARTO'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueSpock() {
+    ataqueJugador = 'SPOCK'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueAleatorioEnemigo() {
+    let ataqueAleatorio = aleatorio(1, 5)
+
+    if (ataqueAleatorio == 1) {
+        ataqueEnemigo = 'PIEDRA'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 2) {
+        ataqueEnemigo = 'PAPEL'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 3) {
+        ataqueEnemigo = 'TIJERA'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 4) {
+        ataqueEnemigo = 'LAGARTO'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 5) {
+        ataqueEnemigo = 'SPOCK'
+        // alert(ataqueEnemigo)
+    }
+
+    combate()
+}
+
+function combate() {
+    let spanVictoriasJugador = document.getElementById('victorias-jugador')
+    let spanVictoriasEnemigo = document.getElementById('victorias-enemigo')
+    
+    if (ataqueEnemigo == ataqueJugador) {
+        crearMensaje("EMPATE");
+    } else if (
+        (ataqueJugador == 'PIEDRA' &&  ataqueEnemigo == 'TIJERA') ||
+        (ataqueJugador == 'PIEDRA' &&  ataqueEnemigo == 'LAGARTO') ||
+        (ataqueJugador == 'PAPEL' &&  ataqueEnemigo == 'PIEDRA') ||
+        (ataqueJugador == 'PAPEL' &&  ataqueEnemigo == 'SPOCK') ||
+        (ataqueJugador == 'TIJERA' &&  ataqueEnemigo == 'PAPEL') ||
+        (ataqueJugador == 'TIJERA' &&  ataqueEnemigo == 'LAGARTO') || 
+        (ataqueJugador == 'LAGARTO' &&  ataqueEnemigo == 'SPOCK') ||
+        (ataqueJugador == 'LAGARTO' &&  ataqueEnemigo == 'PAPEL') ||
+        (ataqueJugador == 'SPOCK' &&  ataqueEnemigo == 'TIJERA') ||
+        (ataqueJugador == 'SPOCK' &&  ataqueEnemigo == 'PIEDRA')
+    ) {
+        // triunfos++;
+        crearMensaje("GANASTE");
+        victoriasJugador++
+    } else {
+        // perdidas++;
+        crearMensaje("PERDISTE");
+        victoriasEnemigo++
+    }
+    spanVictoriasJugador.innerHTML = victoriasJugador
+    spanVictoriasEnemigo.innerHTML = victoriasEnemigo
+    revisarVidas()
+}
+
+function revisarVidas() {
+    if (victoriasJugador == 5) {
+        crearMensajeFinal("FELICITACIONES! Ganaste")
+    }else if (victoriasEnemigo == 5) {
+        crearMensajeFinal("Lo siento, Perdiste")
+    }
+}
+
+function crearMensaje(resultado) {
+    let sectionMensaje = document.getElementById('mensajes')
+
+    let parrafo = document.createElement('p')
+    parrafo.innerHTML = 'Tu personaje uso el arma ' + ataqueJugador + ' y el personaje del PC ataco con ' + ataqueEnemigo + '- ' + resultado
+
+    sectionMensaje.appendChild(parrafo)
+}
+
+function crearMensajeFinal(resultadoFinal) {
+    let sectionMensaje = document.getElementById('mensajes')
+
+    let parrafo = document.createElement('p')
+    parrafo.innerHTML = resultadoFinal
+
+    sectionMensaje.appendChild(parrafo)
+
+    let botonPiedra = document.getElementById('boton-piedra')
+    botonPiedra.disabled = true
+    let botonPapel = document.getElementById('boton-papel')
+    botonPapel.disabled = true
+    let botonTijera = document.getElementById('boton-tijera')
+    botonTijera.disabled = true
+    let botonLagarto = document.getElementById('boton-lagarto')
+    botonLagarto.disabled = true
+    let botonSpock = document.getElementById('boton-spock')
+    botonSpock.disabled = true
+
+    let sectionReinciar = document.getElementById('reiniciar')
+    sectionReinciar.style.display = 'block'
+}
+
+function reiniciarJuego() {
+    location.reload()
+}
+
+function aleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+let personajeJugador
+=======
+let ataqueJugador
+let ataqueEnemigo
+let victoriasJugador = 0
+let victoriasEnemigo = 0
+
+function iniciarJuego() {
+    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+    sectionSeleccionarAtaque.style.display = 'none'
+
+    let sectionReinciar = document.getElementById('reiniciar')
+    sectionReinciar.style.display = 'none'
+
+    let botonPersonajeJugador = document.getElementById('boton-personaje')
+    botonPersonajeJugador.addEventListener('click', seleccionarPersonajeJugador)
+
+    let botonPiedra = document.getElementById('boton-piedra')
+    botonPiedra.addEventListener('click',ataquePiedra)
+    let botonPapel = document.getElementById('boton-papel')
+    botonPapel.addEventListener('click',ataquePapel)
+    let botonTijera = document.getElementById('boton-tijera')
+    botonTijera.addEventListener('click',ataqueTijera)
+    let botonLagarto = document.getElementById('boton-lagarto')
+    botonLagarto.addEventListener('click',ataqueLagarto)
+    let botonSpock = document.getElementById('boton-spock')
+    botonSpock.addEventListener('click',ataqueSpock)
+    
+    let botonReiniciar = document.getElementById('boton-reiniciar')
+    botonReiniciar.addEventListener('click',reiniciarJuego)
+}
+
+function seleccionarPersonajeJugador() {
+    let sectionSeleccionarPersonaje = document.getElementById('seleccionar-personaje')
+    sectionSeleccionarPersonaje.style.display = 'none'
+
+    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+    sectionSeleccionarAtaque.style.display = 'block'
+
+    /*alert("SELECCIONASTE TU PERSONAJE")*/
+    let inputAmy = document.getElementById('amy')
+    let inputBernadette = document.getElementById('bernadette')
+    let inputHoward = document.getElementById('howard')
+    let inputLeonard = document.getElementById('leonard')
+    let inputPenny = document.getElementById('penny')
+    let inputRajesh = document.getElementById('rajesh')
+    let inputSheldon = document.getElementById('sheldon')
+    let inputStuart = document.getElementById('stuart')
+    let spanPersonajeJugador = document.getElementById('personaje-jugador')
+
+    if (inputAmy.checked) {
+        spanPersonajeJugador.innerHTML = 'Ammy'
+        personajeJugador = 1
+    } else if (inputBernadette.checked) {
+        spanPersonajeJugador.innerHTML = 'Bernadette'
+        personajeJugador = 2
+    } else if (inputHoward.checked) {
+        spanPersonajeJugador.innerHTML = 'Howard'
+        personajeJugador = 3
+    } else if (inputLeonard.checked) {
+        spanPersonajeJugador.innerHTML = 'Leonard'
+        personajeJugador = 4
+    } else if (inputPenny.checked) {
+        spanPersonajeJugador.innerHTML = 'Penny'
+        personajeJugador = 5
+    } else if (inputRajesh.checked) {
+        spanPersonajeJugador.innerHTML = 'Rajesh'
+        personajeJugador = 6
+    } else if (inputSheldon.checked) {
+        spanPersonajeJugador.innerHTML = 'Sheldon'
+        personajeJugador = 7
+    } else if (inputStuart.checked) {
+        spanPersonajeJugador.innerHTML = 'Stuart'
+        personajeJugador = 8
+    } else {
+        alert("Debes Seleccionar un Personaje")
+    }
+    seleccionarPersonajeEnemigo()
+}
+
+function seleccionarPersonajeEnemigo() {
+    let enemigoAleatorio = aleatorio(1, 8)
+    let spanPersonajeEnemigo = document.getElementById('personaje-enemigo')
+
+    /* NO REPITO EL MISMO PERSONAJE */
+    while (personajeJugador == enemigoAleatorio) {
+        /*alert(enemigoAleatorio)*/
+        enemigoAleatorio = aleatorio(1, 8)
+    }
+
+    if (enemigoAleatorio == 1) {
+        spanPersonajeEnemigo.innerHTML = 'Ammy'
+    } else if (enemigoAleatorio == 2) {
+        spanPersonajeEnemigo.innerHTML = 'Bernadette'
+    } else if (enemigoAleatorio == 3) {
+        spanPersonajeEnemigo.innerHTML = 'Howard'
+    } else if (enemigoAleatorio == 4) {
+        spanPersonajeEnemigo.innerHTML = 'Leonard'
+    } else if (enemigoAleatorio == 5) {
+        spanPersonajeEnemigo.innerHTML = 'Penny'
+    } else if (enemigoAleatorio == 6) {
+        spanPersonajeEnemigo.innerHTML = 'Rajesh'
+    } else if (enemigoAleatorio == 7) {
+        spanPersonajeEnemigo.innerHTML = 'Sheldon'
+    } else {
+        spanPersonajeEnemigo.innerHTML = 'Stuart'
+    }
+}
+
+function ataquePiedra() {
+    ataqueJugador = 'PIEDRA'
+    ataqueAleatorioEnemigo()
+}
+
+function ataquePapel() {
+    ataqueJugador = 'PAPEL'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueTijera() {
+    ataqueJugador = 'TIJERA'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueLagarto() {
+    ataqueJugador = 'LAGARTO'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueSpock() {
+    ataqueJugador = 'SPOCK'
+    ataqueAleatorioEnemigo()
+}
+
+function ataqueAleatorioEnemigo() {
+    let ataqueAleatorio = aleatorio(1, 5)
+
+    if (ataqueAleatorio == 1) {
+        ataqueEnemigo = 'PIEDRA'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 2) {
+        ataqueEnemigo = 'PAPEL'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 3) {
+        ataqueEnemigo = 'TIJERA'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 4) {
+        ataqueEnemigo = 'LAGARTO'
+        // alert(ataqueEnemigo)
+    }else if (ataqueAleatorio == 5) {
+        ataqueEnemigo = 'SPOCK'
+        // alert(ataqueEnemigo)
+    }
+
+    combate()
+}
+
+function combate() {
+    let spanVictoriasJugador = document.getElementById('victorias-jugador')
+    let spanVictoriasEnemigo = document.getElementById('victorias-enemigo')
+    
+    if (ataqueEnemigo == ataqueJugador) {
+        crearMensaje("EMPATE");
+    } else if (
+        (ataqueJugador == 'PIEDRA' &&  ataqueEnemigo == 'TIJERA') ||
+        (ataqueJugador == 'PIEDRA' &&  ataqueEnemigo == 'LAGARTO') ||
+        (ataqueJugador == 'PAPEL' &&  ataqueEnemigo == 'PIEDRA') ||
+        (ataqueJugador == 'PAPEL' &&  ataqueEnemigo == 'SPOCK') ||
+        (ataqueJugador == 'TIJERA' &&  ataqueEnemigo == 'PAPEL') ||
+        (ataqueJugador == 'TIJERA' &&  ataqueEnemigo == 'LAGARTO') || 
+        (ataqueJugador == 'LAGARTO' &&  ataqueEnemigo == 'SPOCK') ||
+        (ataqueJugador == 'LAGARTO' &&  ataqueEnemigo == 'PAPEL') ||
+        (ataqueJugador == 'SPOCK' &&  ataqueEnemigo == 'TIJERA') ||
+        (ataqueJugador == 'SPOCK' &&  ataqueEnemigo == 'PIEDRA')
+    ) {
+        // triunfos++;
+        crearMensaje("GANASTE");
+        victoriasJugador++
+    } else {
+        // perdidas++;
+        crearMensaje("PERDISTE");
+        victoriasEnemigo++
+    }
+    spanVictoriasJugador.innerHTML = victoriasJugador
+    spanVictoriasEnemigo.innerHTML = victoriasEnemigo
+    revisarVidas()
+}
+
+function revisarVidas() {
+    if (victoriasJugador == 5) {
+        crearMensajeFinal("FELICITACIONES! Ganaste")
+    }else if (victoriasEnemigo == 5) {
+        crearMensajeFinal("Lo siento, Perdiste")
+    }
+}
+
+function crearMensaje(resultado) {
+    let sectionMensaje = document.getElementById('mensajes')
+
+    let parrafo = document.createElement('p')
+    parrafo.innerHTML = 'Tu personaje uso el arma ' + ataqueJugador + ' y el personaje del PC ataco con ' + ataqueEnemigo + '- ' + resultado
+
+    sectionMensaje.appendChild(parrafo)
+}
+
+function crearMensajeFinal(resultadoFinal) {
+    let sectionMensaje = document.getElementById('mensajes')
+
+    let parrafo = document.createElement('p')
+    parrafo.innerHTML = resultadoFinal
+
+    sectionMensaje.appendChild(parrafo)
+
+    let botonPiedra = document.getElementById('boton-piedra')
+    botonPiedra.disabled = true
+    let botonPapel = document.getElementById('boton-papel')
+    botonPapel.disabled = true
+    let botonTijera = document.getElementById('boton-tijera')
+    botonTijera.disabled = true
+    let botonLagarto = document.getElementById('boton-lagarto')
+    botonLagarto.disabled = true
+    let botonSpock = document.getElementById('boton-spock')
+    botonSpock.disabled = true
+
+    let sectionReinciar = document.getElementById('reiniciar')
+    sectionReinciar.style.display = 'block'
+}
+
+function reiniciarJuego() {
+    location.reload()
+}
+
+function aleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+let personajeJugador
+>>>>>>> 58f4922b8dd0587d387d81114c40403299f3c8a5
+window.addEventListener('load', iniciarJuego)
