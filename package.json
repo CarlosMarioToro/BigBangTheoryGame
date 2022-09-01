@@ -1,0 +1,22 @@
+{
+  "name": "bigbangtheory",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CarlosMarioToro/BigBangTheoryGame.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CarlosMarioToro/BigBangTheoryGame/issues"
+  },
+  "homepage": "https://github.com/CarlosMarioToro/BigBangTheoryGame#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
