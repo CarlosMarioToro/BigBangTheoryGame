@@ -24,6 +24,7 @@ const botonReiniciar = document.getElementById('boton-reiniciar')
 const sectionVerMapa = document.getElementById('ver-mapa')
 const mapa = document.getElementById('mapa')
 
+let jugadorId = null
 let jugadores = []
 let jugadoresEnemigos = []
 let ataqueEnemigo
@@ -171,6 +172,21 @@ function iniciarJuego() {
 
     botonPersonajeJugador.addEventListener('click', seleccionarPersonajeJugador)
     botonReiniciar.addEventListener('click',reiniciarJuego)
+
+    unirseAlJuego()
+}
+
+function unirseAlJuego() {
+    fetch("http://localhost:8080/unirse")
+    .then(function (res) {
+        if (res.ok) {
+            res.text()
+                .then(function(respuesta) {
+                    console.log(respuesta)
+                    jugadorId = respuesta
+                })
+        }
+    }) 
 }
 
 function seleccionarPersonajeJugador() {
@@ -203,6 +219,8 @@ function seleccionarPersonajeJugador() {
         return
     }
 
+    seleccionarPersonaje(personajeJugador)
+
     sectionSeleccionarPersonaje.style.display = 'none'
 
     iniciarMapa()
@@ -212,6 +230,18 @@ function seleccionarPersonajeJugador() {
     //sectionSeleccionarAtaque.style.display = 'block'
 
     extraerAtaques(personajeJugador)
+}
+
+function seleccionarPersonaje(personajeJugador) {
+    fetch(`http://localhost:8080/tbbt/${jugadorId}`, {
+        method:"post",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({
+            personaje: personajeJugador
+        })
+    })
 }
 
 function pintarCanvas() {
@@ -242,7 +272,6 @@ function pintarCanvas() {
         }
     }
 }
-
 
 function moverDerecha() {
     personajeJugadorObjeto.velocidadX = 3
