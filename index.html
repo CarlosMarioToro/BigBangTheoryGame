@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="#" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>The Big Bang Theory Carlos</title>
+  <!-- <link rel="stylesheet" href="./css/normalize.css"> -->
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
+
+<body>
+  <section id="seleccionar-personaje">
+    <h1 class="titulo">the B<span class="i">i</span>g <span class="bang">Bang </span>Theory Game</h1>
+    <h2 class="subtitulo">Selecciona tu personaje:</h2>
+
+    <div id="contenedorTarjetas" class="tarjetas">
+      
+    </div>
+    
+    <button id="boton-personaje">Seleccionar</button>
+  </section>
+
+  <section id="ver-mapa">
+    <h1 class="titulo">The B<span class="i">i</span>g <span class="bang">Bang </span>Theory Game</h1>
+    <h2 class="subtitulo">Recorre el mapa con tu personaje:</h2>
+    <canvas id="mapa"></canvas>
+    <section id="botonesMovimiento">
+      <button onmouseup="detenerMovimiento()" onmousedown="moverArriba()" ontouchstart="moverArriba()">Arriba</button>
+      <button onmouseup="detenerMovimiento()" onmousedown="moverIzquierda()" ontouchstart="moverIzquierda()">Izquierda</button>
+      <button onmouseup="detenerMovimiento()" onmousedown="moverAbajo()" ontouchstart="moverAbajo()">Abajo</button>
+      <button onmouseup="detenerMovimiento()" onmousedown="moverDerecha()" ontouchstart="moverDerecha()">Derecha</button>
+    </section>
+  </section>
+
+  <section id="seleccionar-ataque">
+    <h1 class="titulo">The B<span class="i">i</span>g <span class="bang">Bang </span>Theory Game</h1>
+    <h2 class="subtitulo">Selecciona tu arma:</h2>
+
+    <div id="contenedorArmas" class="botonArma">
+    </div>
+
+    <div id="mensajes">
+      <p id="resultado">Mucha Suerte</p>
+
+      <section id="reiniciar">
+        <button id="boton-reiniciar">Reiniciar</button>
+      </section>
+    </div>
+
+    <div class="ataques">
+      <div class="turno">
+        <p id="tituloTurno">TURNO</p>
+        <p id="turno"></p>
+        <div id="turnoNumero"></div>
+      </div>   
+      <div>
+        <p id="victorias-jugador">0</p>
+        <p id="personaje-jugador"></p>
+        <div id="ataques-jugador"></div>
+      </div>
+      <div>
+        <p id="victorias-enemigo">0</p>
+        <p id="personaje-enemigo"></p>
+        <div id="ataques-enemigo"></div>
+      </div> 
+      <div class="resultado">
+        <p id="resultadoAtaques">RESULTADO</p>
+        <p id="tituloAtaques"> <br> </p>
+        <div id="resultadoAtaque"></div>
+      </div>  
+      </div>      
+    </div>
+  </section>
+  <script src="./js/codigo.js"></script>
+</body>
+
+</html>
