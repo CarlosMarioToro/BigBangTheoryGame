@@ -233,7 +233,7 @@ function seleccionarPersonajeJugador() {
 }
 
 function seleccionarPersonaje(personajeJugador) {
-    fetch(`http://localhost:8080/tbbt/${jugadorId}`, {
+    fetch(`http://localhost:8080/thebig/${jugadorId}`, {
         method:"post",
         headers: {
             "Content-Type" : "application/json"
