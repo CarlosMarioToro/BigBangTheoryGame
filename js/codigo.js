@@ -257,6 +257,9 @@ function pintarCanvas() {
     )
 
     personajeJugadorObjeto.pintarPersonaje() 
+
+    enviarPosicion(personajeJugadorObjeto.x, personajeJugadorObjeto.y)
+
     for (let i = 0; i < jugadoresEnemigos.length; i++) {
         if (personajeJugadorObjeto.nombre === jugadoresEnemigos[i].nombre) {
             jugadoresEnemigos.splice(i,1)
@@ -271,6 +274,19 @@ function pintarCanvas() {
             revisarColision(jugadoresEnemigos[i])
         }
     }
+}
+
+function enviarPosicion(x, y) {
+    fetch(`http://localhost:8080/thebig/${jugadorId}/posicion`, {
+        method:"post",
+        headers: {
+            "Content-Type" : "application/json"
+        },
+        body: JSON.stringify({
+            x,
+            y
+        })
+    })
 }
 
 function moverDerecha() {

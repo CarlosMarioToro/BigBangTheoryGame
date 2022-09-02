@@ -12,9 +12,14 @@ class Jugador {
     constructor(id) {
         this.id = id
     }
-    asignarJugador(jugador){
+    asignarJugador(jugador) {
         this.jugador=jugador
-    }}
+    }
+    actualizarPosicion(x, y) {
+        this.x = x
+        this.y = y
+    }
+}
     // class Jugador{constructor(nombre){this.nombre=nombre
 
 
@@ -43,12 +48,26 @@ app.post("/thebig/:jugadorId", (req, res) => {
 
     const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id)
 
-    if (jugadorIndex >=0) {
+    if (jugadorIndex >= 0) {
         jugadores[jugadorIndex].asignarJugador(personaje)
     }
 
     console.log(jugadores)
     console.log(jugadorId)
+    res.end()
+})
+
+app.post("/thebig/:jugadorId/posicion", (req,res) => {
+    const jugadorId = req.params.jugadorId || ""
+    const x = req.body.x || 0
+    const y = req.body.y || 0
+
+    const jugadorIndex = jugadores.findIndex((jugador) => jugadorId === jugador.id)
+
+    if (jugadorIndex >= 0) {
+        jugadores[jugadorIndex].actualizarPosicion(x, y)
+    }
+
     res.end()
 })
 
