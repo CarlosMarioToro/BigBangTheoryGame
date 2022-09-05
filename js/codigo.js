@@ -25,6 +25,7 @@ const sectionVerMapa = document.getElementById('ver-mapa')
 const mapa = document.getElementById('mapa')
 
 let jugadorId = null
+let result = []
 let jugadores = []
 let jugadoresEnemigos = []
 let ataqueEnemigo
@@ -318,11 +319,11 @@ function enviarPosicion(x, y) {
                             // console.log('forEach', Personaje)
                             if(enemigo.jugador.nombre === Personaje.nombre){
                                 // console.log("Personaje.nombre", Personaje.nombre)
-                                jugadoresEnemigos.push(Personaje)
-                                let result = jugadoresEnemigos.filter((item,index)=>{
-                                    return jugadoresEnemigos.indexOf(item) === index;
+                                result.push(Personaje)
+                                jugadoresEnemigos = result.filter((item,index)=>{
+                                    return result.indexOf(item) === index;
                                   })
-                                  console.log(result)
+                                  console.log("jugadoresEnemigos", jugadoresEnemigos)
                             }
                         })
                         // console.log("jugadoresEnemigos", jugadoresEnemigos)
