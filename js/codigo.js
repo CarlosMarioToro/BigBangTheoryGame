@@ -99,46 +99,62 @@ let rajesh = new Personaje('Rajesh', './Imagenes/Rajesh.png', 3, './Imagenes/Raj
 let sheldon = new Personaje('Sheldon', './Imagenes/Sheldon.png', 3, './Imagenes/Sheldon2.png',  (mapa.width/mapaBackground.naturalWidth) * 540, (mapa.height/mapaBackground.naturalHeight) * 330);
 let stuart = new Personaje('Stuart', './Imagenes/Stuart.png', 3, './Imagenes/Stuart.png',  (mapa.width/mapaBackground.naturalWidth) * 350, (mapa.height/mapaBackground.naturalHeight) * 380);
 
-amy.ataques.push(
+const AMY_ATAQUES = [    
     { nombre: 'piedra', id: 'boton-piedra', pic: './Imagenes/Piedra.png'},
     { nombre: 'lagarto', id: 'boton-lagarto', pic: './Imagenes/Lagarto.png'},
     { nombre: 'papel', id: 'boton-papel', pic: './Imagenes/Papel.png'}
-)
-bernadette.ataques.push(
+]
+
+const BERNADETTE_ATAQUES = [
     { nombre: 'papel', id: 'boton-papel', pic: './Imagenes/Papel.png'},
     { nombre: 'spock', id: 'boton-spock', pic: './Imagenes/Spock.png'},
     { nombre: 'tijera', id: 'boton-tijera', pic: './Imagenes/Tijeras.png'}
-)
-howard.ataques.push(
+]
+
+const HOWARD_ATAQUES = [
     { nombre: 'tijera', id: 'boton-tijera', pic: './Imagenes/Tijeras.png'},
     { nombre: 'piedra', id: 'boton-piedra', pic: './Imagenes/Piedra.png'},
     { nombre: 'lagarto', id: 'boton-lagarto', pic: './Imagenes/Lagarto.png'}
-)
-leonard.ataques.push(
+]
+
+const LEONARD_ATAQUES = [
     { nombre: 'lagarto', id: 'boton-lagarto', pic: './Imagenes/Lagarto.png'},
     { nombre: 'papel', id: 'boton-papel', pic: './Imagenes/Papel.png'},
     { nombre: 'spock', id: 'boton-spock', pic: './Imagenes/Spock.png'}
-)
-penny.ataques.push(
+]
+
+const PENNY_ATAQUES = [
     { nombre: 'spock', id: 'boton-spock', pic: './Imagenes/Spock.png'},
     { nombre: 'tijera', id: 'boton-tijera', pic: './Imagenes/Tijeras.png'},
     { nombre: 'piedra', id: 'boton-piedra', pic: './Imagenes/Piedra.png'}
-)
-rajesh.ataques.push(
+]
+
+const RAJESH_ATAQUES = [
     { nombre: 'piedra', id: 'boton-piedra', pic: './Imagenes/Piedra.png'},
     { nombre: 'lagarto', id: 'boton-lagarto', pic: './Imagenes/Lagarto.png'},
     { nombre: 'spock', id: 'boton-spock', pic: './Imagenes/Spock.png'}
-)
-sheldon.ataques.push(
+]
+
+const SHELDON_ATAQUES = [
     { nombre: 'papel', id: 'boton-papel', pic: './Imagenes/Papel.png'},
     { nombre: 'spock', id: 'boton-spock', pic: './Imagenes/Spock.png'},
     { nombre: 'lagarto', id: 'boton-lagarto', pic: './Imagenes/Lagarto.png'}
-)
-stuart.ataques.push(
+]
+
+const STUART_ATAQUES = [
     { nombre: 'tijera', id: 'boton-tijera', pic: './Imagenes/Tijeras.png'},
     { nombre: 'piedra', id: 'boton-piedra', pic: './Imagenes/Piedra.png'},
     { nombre: 'papel', id: 'boton-papel', pic: './Imagenes/Papel.png'}
-)
+]
+
+amy.ataques.push(...AMY_ATAQUES)
+bernadette.ataques.push(...BERNADETTE_ATAQUES)
+howard.ataques.push(...HOWARD_ATAQUES)
+leonard.ataques.push(...LEONARD_ATAQUES)
+penny.ataques.push(...PENNY_ATAQUES)
+rajesh.ataques.push(...RAJESH_ATAQUES)
+sheldon.ataques.push(...SHELDON_ATAQUES)
+stuart.ataques.push(...STUART_ATAQUES)
 
 jugadores.push(amy, bernadette, howard, leonard, penny, rajesh, sheldon, stuart)
 
@@ -182,7 +198,7 @@ function unirseAlJuego() {
         if (res.ok) {
             res.text()
                 .then(function(respuesta) {
-                    console.log(respuesta)
+                    // console.log(respuesta)
                     jugadorId = respuesta
                 })
         }
@@ -266,9 +282,11 @@ function pintarCanvas() {
         }
     }
 
-    for (let i = 0; i < jugadoresEnemigos.length; i++) {
-        jugadoresEnemigos[i].pintarPersonaje()
-    }
+    // console.log(jugadoresEnemigos)
+
+    // for (let i = 0; i < jugadoresEnemigos.length; i++) {
+    //     jugadoresEnemigos[i].pintarPersonaje()
+    // }
     if(personajeJugadorObjeto.velocidadX !== 0 || personajeJugadorObjeto.velocidadY !== 0) {
         for (let i = 0; i < jugadoresEnemigos.length; i++) {
             revisarColision(jugadoresEnemigos[i])
@@ -285,7 +303,27 @@ function enviarPosicion(x, y) {
         body: JSON.stringify({
             x,
             y
-        })
+        }) 
+    })
+    .then(function(res) {
+        if(res.ok) {
+            res.json()
+                .then(function({ enemigos }) {
+                    // console.log(enemigos)  
+                    enemigos.forEach(function (enemigo){
+                        console.log(enemigo.jugador.nombre)
+                        // if(enemigo.jugador.nombre === "") {
+
+                        // }
+                    })                  
+                    // for (let i = 0; i < jugadoresEnemigos.length; i++) {
+                    //     jugadoresEnemigos[i].x = enemigos.x 
+                    //     jugadoresEnemigos[i].y = enemigos.y
+                    //     jugadoresEnemigos[i].pintarPersonaje()
+                    // }
+                    // console.log(jugadoresEnemigos);
+                })
+        }
     })
 }
 
