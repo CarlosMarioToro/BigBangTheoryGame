@@ -99,7 +99,7 @@ let rajesh = new Personaje('Rajesh', './Imagenes/Rajesh.png', 3, './Imagenes/Raj
 let sheldon = new Personaje('Sheldon', './Imagenes/Sheldon.png', 3, './Imagenes/Sheldon2.png',  (mapa.width/mapaBackground.naturalWidth) * 540, (mapa.height/mapaBackground.naturalHeight) * 330);
 let stuart = new Personaje('Stuart', './Imagenes/Stuart.png', 3, './Imagenes/Stuart.png',  (mapa.width/mapaBackground.naturalWidth) * 350, (mapa.height/mapaBackground.naturalHeight) * 380);
 
-const AMY_ATAQUES = [    
+const AMY_ATAQUES = [
     { nombre: 'piedra', id: 'boton-piedra', pic: './Imagenes/Piedra.png'},
     { nombre: 'lagarto', id: 'boton-lagarto', pic: './Imagenes/Lagarto.png'},
     { nombre: 'papel', id: 'boton-papel', pic: './Imagenes/Papel.png'}
@@ -158,7 +158,7 @@ stuart.ataques.push(...STUART_ATAQUES)
 
 jugadores.push(amy, bernadette, howard, leonard, penny, rajesh, sheldon, stuart)
 
-jugadoresEnemigos = Object.values(jugadores)
+// jugadoresEnemigos = Object.values(jugadores)
 
 function iniciarJuego() {
 
@@ -202,7 +202,7 @@ function unirseAlJuego() {
                     jugadorId = respuesta
                 })
         }
-    }) 
+    })
 }
 
 function seleccionarPersonajeJugador() {
@@ -242,7 +242,7 @@ function seleccionarPersonajeJugador() {
     iniciarMapa()
 
     pintarCanvas()
-    
+
     //sectionSeleccionarAtaque.style.display = 'block'
 
     extraerAtaques(personajeJugador)
@@ -272,15 +272,17 @@ function pintarCanvas() {
         mapa.height
     )
 
-    personajeJugadorObjeto.pintarPersonaje() 
+    personajeJugadorObjeto.pintarPersonaje()
 
     enviarPosicion(personajeJugadorObjeto.x, personajeJugadorObjeto.y)
 
-    for (let i = 0; i < jugadoresEnemigos.length; i++) {
-        if (personajeJugadorObjeto.nombre === jugadoresEnemigos[i].nombre) {
-            jugadoresEnemigos.splice(i,1)
-        }
-    }
+    // for (let i = 0; i < jugadoresEnemigos.length; i++) {
+    //     if (personajeJugadorObjeto.nombre === jugadoresEnemigos[i].nombre) {
+    //         jugadoresEnemigos.splice(i,1)
+    //     }
+    // }
+
+    // jugadoresEnemigos = jugadores.filter(item => item.nombre !== personajeJugadorObjeto.nombre)
 
     // console.log(jugadoresEnemigos)
 
@@ -303,21 +305,39 @@ function enviarPosicion(x, y) {
         body: JSON.stringify({
             x,
             y
-        }) 
+        })
     })
     .then(function(res) {
         if(res.ok) {
             res.json()
                 .then(function({ enemigos }) {
-                    // console.log(enemigos)  
+                    // console.log(enemigos)
                     enemigos.forEach(function (enemigo){
-                        console.log(enemigo.jugador.nombre)
+                        // console.log("enemigo.jugador.nombre ", enemigo.jugador.nombre)
+                        jugadores.forEach(Personaje => {
+                            // console.log('forEach', Personaje)
+                            if(enemigo.jugador.nombre === Personaje.nombre){
+                                // console.log("Personaje.nombre", Personaje.nombre)
+                                jugadoresEnemigos.push(Personaje)
+                                let result = jugadoresEnemigos.filter((item,index)=>{
+                                    return jugadoresEnemigos.indexOf(item) === index;
+                                  })
+                                  console.log(result)
+                            }
+                        })
+                        // console.log("jugadoresEnemigos", jugadoresEnemigos)
+                        // console.log("jugadores", jugadores);
+                        // jugadoresEnemigos = jugadores.filter(item => enemigo.jugador.nombre === Personaje.nombre)
+
+                        // console.log(jugadoresEnemigos)
+
+                        // console.log(enemigo.jugador.nombre)
                         // if(enemigo.jugador.nombre === "") {
 
                         // }
-                    })                  
+                    })
                     // for (let i = 0; i < jugadoresEnemigos.length; i++) {
-                    //     jugadoresEnemigos[i].x = enemigos.x 
+                    //     jugadoresEnemigos[i].x = enemigos.x
                     //     jugadoresEnemigos[i].y = enemigos.y
                     //     jugadoresEnemigos[i].pintarPersonaje()
                     // }
@@ -381,7 +401,7 @@ function tecladoFlechas(event) {
             break
         case 'ArrowLeft':
             moverIzquierda()
-            break    
+            break
         default:
             break
     }
@@ -506,12 +526,12 @@ function ataqueAleatorioEnemigo() {
         ataqueEnemigo = 'LAGARTO'
     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'spock') {
         ataqueEnemigo = 'SPOCK'
-    }       
-    
+    }
+
     combate()
 }
 
-function combate() {    
+function combate() {
     contadorTurno += 1
     if (ataqueEnemigo == ataqueJugador[ataqueJugador.length - 1]) {
         crearMensaje("EMPATE");
