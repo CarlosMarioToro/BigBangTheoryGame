@@ -90,14 +90,14 @@ class Personaje {
     }
 }
 
-let amy = new Personaje('Amy', './Imagenes/Amy.png', 3, './Imagenes/Amy2.png', (mapa.width/mapaBackground.naturalWidth) * 405, (mapa.height/mapaBackground.naturalHeight) * 420);
+let amy = new Personaje('Amy', './Imagenes/Amy.png', 3, './Imagenes/Amy.png', (mapa.width/mapaBackground.naturalWidth) * 405, (mapa.height/mapaBackground.naturalHeight) * 420);
 // let amy = new Personaje('Amy', './Imagenes/Amy.png', 3, './Imagenes/Amy2.png', 405, 420);
-let bernadette = new Personaje('Bernadette', './Imagenes/Bernadette.png', 3, './Imagenes/Bernadette2.png',  (mapa.width/mapaBackground.naturalWidth) * 295, (mapa.height/mapaBackground.naturalHeight) * 420);
-let howard = new Personaje('Howard', './Imagenes/Howard.png', 3, './Imagenes/Howard2.png',  (mapa.width/mapaBackground.naturalWidth) * 295, (mapa.height/mapaBackground.naturalHeight) * 340);
-let leonard = new Personaje('Leonard', './Imagenes/Leonard.png', 3, './Imagenes/Leonard2.png',  (mapa.width/mapaBackground.naturalWidth) * 730, (mapa.height/mapaBackground.naturalHeight) * 370);
-let penny = new Personaje('Penny', './Imagenes/Penny.png', 3, './Imagenes/Penny2.png',  (mapa.width/mapaBackground.naturalWidth) * 45, (mapa.height/mapaBackground.naturalHeight) *400);
-let rajesh = new Personaje('Rajesh', './Imagenes/Rajesh.png', 3, './Imagenes/Rajesh2.png',  (mapa.width/mapaBackground.naturalWidth) * 405, (mapa.height/mapaBackground.naturalHeight) * 340);
-let sheldon = new Personaje('Sheldon', './Imagenes/Sheldon.png', 3, './Imagenes/Sheldon2.png',  (mapa.width/mapaBackground.naturalWidth) * 540, (mapa.height/mapaBackground.naturalHeight) * 330);
+let bernadette = new Personaje('Bernadette', './Imagenes/Bernadette.png', 3, './Imagenes/Bernadette.png',  (mapa.width/mapaBackground.naturalWidth) * 295, (mapa.height/mapaBackground.naturalHeight) * 420);
+let howard = new Personaje('Howard', './Imagenes/Howard.png', 3, './Imagenes/Howard.png',  (mapa.width/mapaBackground.naturalWidth) * 295, (mapa.height/mapaBackground.naturalHeight) * 340);
+let leonard = new Personaje('Leonard', './Imagenes/Leonard.png', 3, './Imagenes/Leonard.png',  (mapa.width/mapaBackground.naturalWidth) * 730, (mapa.height/mapaBackground.naturalHeight) * 370);
+let penny = new Personaje('Penny', './Imagenes/Penny.png', 3, './Imagenes/Penny.png',  (mapa.width/mapaBackground.naturalWidth) * 45, (mapa.height/mapaBackground.naturalHeight) *400);
+let rajesh = new Personaje('Rajesh', './Imagenes/Rajesh.png', 3, './Imagenes/Rajesh.png',  (mapa.width/mapaBackground.naturalWidth) * 405, (mapa.height/mapaBackground.naturalHeight) * 340);
+let sheldon = new Personaje('Sheldon', './Imagenes/Sheldon.png', 3, './Imagenes/Sheldon.png',  (mapa.width/mapaBackground.naturalWidth) * 540, (mapa.height/mapaBackground.naturalHeight) * 330);
 let stuart = new Personaje('Stuart', './Imagenes/Stuart.png', 3, './Imagenes/Stuart.png',  (mapa.width/mapaBackground.naturalWidth) * 350, (mapa.height/mapaBackground.naturalHeight) * 380);
 
 const AMY_ATAQUES = [
@@ -277,19 +277,12 @@ function pintarCanvas() {
 
     enviarPosicion(personajeJugadorObjeto.x, personajeJugadorObjeto.y)
 
-    // for (let i = 0; i < jugadoresEnemigos.length; i++) {
-    //     if (personajeJugadorObjeto.nombre === jugadoresEnemigos[i].nombre) {
-    //         jugadoresEnemigos.splice(i,1)
-    //     }
-    // }
+    // console.log(jugadoresEnemigos);
 
-    // jugadoresEnemigos = jugadores.filter(item => item.nombre !== personajeJugadorObjeto.nombre)
+    for (let index = 0; index < jugadoresEnemigos.length; index++) {
+        jugadoresEnemigos[index].pintarPersonaje();
+    }
 
-    // console.log(jugadoresEnemigos)
-
-    // for (let i = 0; i < jugadoresEnemigos.length; i++) {
-    //     jugadoresEnemigos[i].pintarPersonaje()
-    // }
     if(personajeJugadorObjeto.velocidadX !== 0 || personajeJugadorObjeto.velocidadY !== 0) {
         for (let i = 0; i < jugadoresEnemigos.length; i++) {
             revisarColision(jugadoresEnemigos[i])
@@ -312,37 +305,23 @@ function enviarPosicion(x, y) {
         if(res.ok) {
             res.json()
                 .then(function({ enemigos }) {
-                    // console.log(enemigos)
                     enemigos.forEach(function (enemigo){
-                        // console.log("enemigo.jugador.nombre ", enemigo.jugador.nombre)
                         jugadores.forEach(Personaje => {
-                            // console.log('forEach', Personaje)
                             if(enemigo.jugador.nombre === Personaje.nombre){
-                                // console.log("Personaje.nombre", Personaje.nombre)
                                 result.push(Personaje)
                                 jugadoresEnemigos = result.filter((item,index)=>{
                                     return result.indexOf(item) === index;
                                   })
-                                  console.log("jugadoresEnemigos", jugadoresEnemigos)
+                                //   console.log("jugadoresEnemigos", jugadoresEnemigos)
+                                //   console.log("jugadoresEnemigos.length", jugadoresEnemigos.length);
+                                  for (let i = 0; i < jugadoresEnemigos.length; i++) {
+                                    jugadoresEnemigos[i].x = enemigo.x
+                                    jugadoresEnemigos[i].y = enemigo.y
+                                    // jugadoresEnemigos[i].pintarPersonaje()
+                                  }
                             }
                         })
-                        // console.log("jugadoresEnemigos", jugadoresEnemigos)
-                        // console.log("jugadores", jugadores);
-                        // jugadoresEnemigos = jugadores.filter(item => enemigo.jugador.nombre === Personaje.nombre)
-
-                        // console.log(jugadoresEnemigos)
-
-                        // console.log(enemigo.jugador.nombre)
-                        // if(enemigo.jugador.nombre === "") {
-
-                        // }
                     })
-                    // for (let i = 0; i < jugadoresEnemigos.length; i++) {
-                    //     jugadoresEnemigos[i].x = enemigos.x
-                    //     jugadoresEnemigos[i].y = enemigos.y
-                    //     jugadoresEnemigos[i].pintarPersonaje()
-                    // }
-                    // console.log(jugadoresEnemigos);
                 })
         }
     })
@@ -372,8 +351,6 @@ function detenerMovimiento() {
 function iniciarMapa() {
     personajeJugadorObjeto = obtenerObjetoPersonaje(personajeJugador)
     sectionVerMapa.style.display = 'flex'
-    // mapa.width = 1005
-    // mapa.height = 494
     intervalo = setInterval(pintarCanvas,50)
 
     window.addEventListener('keydown', tecladoFlechas)
@@ -409,6 +386,7 @@ function tecladoFlechas(event) {
 }
 
 function revisarColision(enemigo) {
+    console.log("enemigo", enemigo)
     const arribaEnemigo = enemigo.y
     const abajoEnemigo = enemigo.y + enemigo.alto
     const derechaEnemigo = enemigo.x + enemigo.ancho
