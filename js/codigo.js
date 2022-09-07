@@ -25,6 +25,7 @@ const sectionVerMapa = document.getElementById('ver-mapa')
 const mapa = document.getElementById('mapa')
 
 let jugadorId = null
+let enemigoId = null
 let result = []
 let jugadores = []
 let jugadoresEnemigos = []
@@ -321,6 +322,7 @@ function enviarPosicion(x, y) {
                                     // jugadoresEnemigos[i].pintarPersonaje()
                                   }
                             }
+                            enemigoId = enemigo.id
                         })
                     })
                 })
@@ -387,7 +389,7 @@ function tecladoFlechas(event) {
 }
 
 function revisarColision(enemigo) {
-    console.log("enemigo", enemigo)
+    // console.log("enemigo", enemigo)
     const arribaEnemigo = enemigo.y
     const abajoEnemigo = enemigo.y + enemigo.alto
     const derechaEnemigo = enemigo.x + enemigo.ancho
@@ -465,8 +467,13 @@ function SeleccionarBotonAtaque() {
                 ataqueJugador.push('SPOCK')
                 // ataqueAleatorioEnemigo()
             }
+
+            console.log("SeleccionarBotonAtaque-ataqueJugador", ataqueJugador)
             // ataqueAleatorioEnemigo()
-            enviarAtaques()
+            if(ataqueJugador.length > 0) {
+                console.log("ataqueJugador > 0", ataqueJugador)
+                enviarAtaques()
+            }
         })
     })
 }
@@ -481,6 +488,24 @@ function enviarAtaques() {
             ataques : ataqueJugador
         })
     })
+
+    intervalo = setInterval(obtenerAtaques, 50)
+}
+
+function obtenerAtaques() {
+    fetch(`http://localhost:8080/thebig/${enemigoId}/ataques`)
+        .then(function (res) {
+            if (res.ok) {
+                res.json()
+                    .then(function({ ataques }) {
+                        console.log("ataques.length", ataques.length)
+                        if(ataques.length > 1){
+                            ataqueEnemigo = ataques
+                            combate()
+                        }
+                    })
+            }
+        })
 }
 
 function seleccionarPersonajeEnemigo(enemigo) {
@@ -507,25 +532,26 @@ function extraerAtaquesEnemigo(personajeJugador) {
     }
 }
 
-function ataqueAleatorioEnemigo() {
-    let ataqueAleatorio = aleatorio(0, ataquesPersonaje.length -1)
+// function ataqueAleatorioEnemigo() {
+//     let ataqueAleatorio = aleatorio(0, ataquesPersonaje.length -1)
 
-    if (ataquesPersonaje[ataqueAleatorio].nombre === 'piedra') {
-        ataqueEnemigo = 'PIEDRA'
-    }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'papel') {
-        ataqueEnemigo = 'PAPEL'
-    }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'tijera') {
-        ataqueEnemigo = 'TIJERA'
-    }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'lagarto') {
-        ataqueEnemigo = 'LAGARTO'
-    }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'spock') {
-        ataqueEnemigo = 'SPOCK'
-    }
+//     if (ataquesPersonaje[ataqueAleatorio].nombre === 'piedra') {
+//         ataqueEnemigo = 'PIEDRA'
+//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'papel') {
+//         ataqueEnemigo = 'PAPEL'
+//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'tijera') {
+//         ataqueEnemigo = 'TIJERA'
+//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'lagarto') {
+//         ataqueEnemigo = 'LAGARTO'
+//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'spock') {
+//         ataqueEnemigo = 'SPOCK'
+//     }
 
-    combate()
-}
+//     combate()
+// }
 
 function combate() {
+    console.log("combate-ataqueEnemigo", ataqueEnemigo);
     contadorTurno += 1
     if (ataqueEnemigo == ataqueJugador[ataqueJugador.length - 1]) {
         crearMensaje("EMPATE");
@@ -558,8 +584,10 @@ function revisarVidas() {
     // console.log("Revisar vidas: ", victoriasJugador)
     if (victoriasJugador == 5) {
         crearMensajeFinal("FELICITACIONES! Ganaste")
+        clearInterval(intervalo)
     }else if (victoriasEnemigo == 5) {
         crearMensajeFinal("Lo siento, Perdiste")
+        clearInterval(intervalo)
     }
 }
 

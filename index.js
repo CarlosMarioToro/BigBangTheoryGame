@@ -90,9 +90,15 @@ app.post("/thebig/:jugadorId/ataques", (req, res) => {
 })
 
 app.get("/thebig/:jugadorId/ataques", (req, res) => {
-    
+    const jugadorId = req.params.jugadorId || ""
+
+    const jugador = jugadores.find((jugador) => jugador.id === jugadorId)
+
+    res.send({
+        ataques: jugador.ataques || ""
+    })
 })
 
 app.listen(8080, () => {
-    console.log("Servidor Funcionando");
+    console.log("Servidor Funcionando")
 })
