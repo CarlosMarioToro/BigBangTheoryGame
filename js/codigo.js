@@ -280,14 +280,15 @@ function pintarCanvas() {
     // console.log(jugadoresEnemigos);
 
     for (let index = 0; index < jugadoresEnemigos.length; index++) {
-        jugadoresEnemigos[index].pintarPersonaje();
+        jugadoresEnemigos[index].pintarPersonaje()
+        revisarColision(jugadoresEnemigos[index])
     }
 
-    if(personajeJugadorObjeto.velocidadX !== 0 || personajeJugadorObjeto.velocidadY !== 0) {
-        for (let i = 0; i < jugadoresEnemigos.length; i++) {
-            revisarColision(jugadoresEnemigos[i])
-        }
-    }
+    // if(personajeJugadorObjeto.velocidadX !== 0 || personajeJugadorObjeto.velocidadY !== 0) {
+    //     for (let i = 0; i < jugadoresEnemigos.length; i++) {
+    //         revisarColision(jugadoresEnemigos[i])
+    //     }
+    // }
 }
 
 function enviarPosicion(x, y) {
@@ -446,24 +447,38 @@ function SeleccionarBotonAtaque() {
         boton.addEventListener('click', (e) => {
             if (e.target.textContent === 'piedra' || e.target.alt === 'piedra') {
                 ataqueJugador.push('PIEDRA')
-                ataqueAleatorioEnemigo()
+                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'papel' || e.target.alt === 'papel') {
                 ataqueJugador.push('PAPEL')
-                ataqueAleatorioEnemigo()
+                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'tijera' || e.target.alt === 'tijera') {
                 ataqueJugador.push('TIJERA')
-                ataqueAleatorioEnemigo()
+                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'lagarto' || e.target.alt === 'lagarto') {
                 ataqueJugador.push('LAGARTO')
-                ataqueAleatorioEnemigo()
+                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'spock' || e.target.alt === 'spock') {
                 ataqueJugador.push('SPOCK')
-                ataqueAleatorioEnemigo()
+                // ataqueAleatorioEnemigo()
             }
+            // ataqueAleatorioEnemigo()
+            enviarAtaques()
+        })
+    })
+}
+
+function enviarAtaques() {
+    fetch(`http://localhost:8080/thebig/${jugadorId}/ataques`, {
+        method: "post",
+        headers: {
+            "Content-Type": "application-json"
+        },
+        body: JSON.stringify({
+            ataques : ataqueJugador
         })
     })
 }
