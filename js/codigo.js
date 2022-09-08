@@ -25,6 +25,7 @@ const botonReiniciar = document.getElementById('boton-reiniciar')
 const sectionVerMapa = document.getElementById('ver-mapa')
 const mapa = document.getElementById('mapa')
 
+var resultadosAtaques = []
 let jugadorId = null
 let enemigoId = null
 let result = []
@@ -559,40 +560,71 @@ function extraerAtaquesEnemigo(personajeJugador) {
 function combate() {
     console.log("combate-ataqueEnemigo", ataqueEnemigo);
     contadorTurno += 1
-    for (let index = 0; index < ataqueEnemigo.length; index++) {
-        console.log("ataqueEnemigo[index]", ataqueEnemigo[index]);
-        console.log("ataqueJugador[index]", ataqueJugador[index]);
-        if (ataqueEnemigo[index] == ataqueJugador[index]) {
-            crearMensaje("EMPATE", index);
+    victoriasJugador = 0
+    victoriasEnemigo = 0
+    // let resultadosAtaques = []
+    // var resultadosAtaques = new Array(ataqueEnemigo.length)
+
+    for(index=0; index<ataqueEnemigo.length; index++) {
+        resultadosAtaques[index] = new Array(4);
+      }
+
+    //   for (i=0; i<ataqueEnemigo.length; i++){
+    //     for (j=0; j<4; j++){
+    //         resultadosAtaques[i][j]= i*j;
+    //     }
+    //   }
+    
+    
+    for (let i = 0; i < ataqueEnemigo.length; i++) {
+        console.log("ataqueEnemigo[i]", ataqueEnemigo[i]);
+        console.log("ataqueJugador[i]", ataqueJugador[i]);
+        if (ataqueEnemigo[i] == ataqueJugador[i]) {
+            resultadosAtaques[i][0] = i + 1
+            resultadosAtaques[i][1] = ataqueJugador[i]
+            resultadosAtaques[i][2] = ataqueEnemigo[i]
+            resultadosAtaques[i][3] = "EMPATE"
+            // crearMensaje("EMPATE", i);
         } else if (
-            (ataqueJugador[index] == 'PIEDRA' &&  ataqueEnemigo[index] == 'TIJERA') ||
-            (ataqueJugador[index] == 'PIEDRA' &&  ataqueEnemigo[index] == 'LAGARTO') ||
-            (ataqueJugador[index] == 'PAPEL' &&  ataqueEnemigo[index] == 'PIEDRA') ||
-            (ataqueJugador[index] == 'PAPEL' &&  ataqueEnemigo[index] == 'SPOCK') ||
-            (ataqueJugador[index] == 'TIJERA' &&  ataqueEnemigo[index] == 'PAPEL') ||
-            (ataqueJugador[index] == 'TIJERA' &&  ataqueEnemigo[index] == 'LAGARTO') ||
-            (ataqueJugador[index] == 'LAGARTO' &&  ataqueEnemigo[index] == 'SPOCK') ||
-            (ataqueJugador[index] == 'LAGARTO' &&  ataqueEnemigo[index] == 'PAPEL') ||
-            (ataqueJugador[index] == 'SPOCK' &&  ataqueEnemigo[index] == 'TIJERA') ||
-            (ataqueJugador[index] == 'SPOCK' &&  ataqueEnemigo[index] == 'PIEDRA')
+            (ataqueJugador[i] == 'PIEDRA' &&  ataqueEnemigo[i] == 'TIJERA') ||
+            (ataqueJugador[i] == 'PIEDRA' &&  ataqueEnemigo[i] == 'LAGARTO') ||
+            (ataqueJugador[i] == 'PAPEL' &&  ataqueEnemigo[i] == 'PIEDRA') ||
+            (ataqueJugador[i] == 'PAPEL' &&  ataqueEnemigo[i] == 'SPOCK') ||
+            (ataqueJugador[i] == 'TIJERA' &&  ataqueEnemigo[i] == 'PAPEL') ||
+            (ataqueJugador[i] == 'TIJERA' &&  ataqueEnemigo[i] == 'LAGARTO') ||
+            (ataqueJugador[i] == 'LAGARTO' &&  ataqueEnemigo[i] == 'SPOCK') ||
+            (ataqueJugador[i] == 'LAGARTO' &&  ataqueEnemigo[i] == 'PAPEL') ||
+            (ataqueJugador[i] == 'SPOCK' &&  ataqueEnemigo[i] == 'TIJERA') ||
+            (ataqueJugador[i] == 'SPOCK' &&  ataqueEnemigo[i] == 'PIEDRA')
         ) {
-            crearMensaje("GANASTE" , index);
+            resultadosAtaques[i][0] = i + 1
+            resultadosAtaques[i][1] = ataqueJugador[i]
+            resultadosAtaques[i][2] = ataqueEnemigo[i]
+            resultadosAtaques[i][3] = "GANASTE"
+            // crearMensaje("GANASTE" , i);
             victoriasJugador++
         } else {
+            resultadosAtaques[i][0] = i + 1
             // perdidas++;
-            crearMensaje("PERDISTE", index);
+            resultadosAtaques[i][1] = ataqueJugador[i]
+            resultadosAtaques[i][2] = ataqueEnemigo[i]
+            resultadosAtaques[i][3] = "PERDISTE"
+            // crearMensaje("PERDISTE", i);
             victoriasEnemigo++
         }
         // console.log("Combate: ", victoriasJugador)
         spanVictoriasJugador.innerHTML = victoriasJugador
         spanVictoriasEnemigo.innerHTML = victoriasEnemigo
+        // console.table(resultadosAtaques);
     
         // console.log("victoriasEnemigo == 5", victoriasEnemigo == 5);
     
         if(victoriasEnemigo == 5 || victoriasJugador == 5) {
+            crearMensaje()
             revisarVidas()
         }
     }
+    console.log(resultadosAtaques)
 }
 
 function revisarVidas() {
@@ -611,38 +643,41 @@ function revisarVidas() {
 }
 
 function crearMensaje(resultado, index) {
-    let nuevoAtaqueJugador = document.createElement('p')
-    let nuevoAtaqueEnemigo = document.createElement('p')
-    let resultadoA = document.createElement('p')
-    let turnoA = document.createElement('p')
+    for (let i = 0; i < resultadosAtaques.length; i++) {
+        let nuevoAtaqueJugador = document.createElement('p')
+        let nuevoAtaqueEnemigo = document.createElement('p')
+        let resultadoA = document.createElement('p')
+        let turnoA = document.createElement('p')
 
-    turnoA.innerHTML = "Turno " + contadorTurno + ":"
-    // sectionMensaje.innerHTML = resultado
-    // console.log("ataqueEnemigo[ataqueEnemigo.length - 1]", ataqueEnemigo[ataqueEnemigo.length - 1])
-    nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo[index]
-    nuevoAtaqueJugador.innerHTML = ataqueJugador[index]
-    resultadoA.innerHTML = resultado
+        turnoA.innerHTML = "Turno " + resultadosAtaques[i][0] + ":"
+        // sectionMensaje.innerHTML = resultado
+        // console.log("ataqueEnemigo[ataqueEnemigo.length - 1]", ataqueEnemigo[ataqueEnemigo.length - 1])
+        nuevoAtaqueEnemigo.innerHTML = resultadosAtaques[i][2]
+        nuevoAtaqueJugador.innerHTML = resultadosAtaques[i][1]
+        resultadoA.innerHTML = resultadosAtaques[i][3]
 
-    turno.appendChild(turnoA)
-    ataquesJugador.appendChild(nuevoAtaqueJugador)
-    ataquesEnemigo.appendChild(nuevoAtaqueEnemigo)
-    if (resultado === "PERDISTE") {
-        resultadoA.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
-        nuevoAtaqueJugador.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
-        nuevoAtaqueEnemigo.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
-        turnoA.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
-    }else if (resultado === "GANASTE") {
-        resultadoA.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
-        nuevoAtaqueJugador.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
-        nuevoAtaqueEnemigo.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
-        turnoA.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
-    }else {
-        resultadoA.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
-        nuevoAtaqueJugador.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
-        nuevoAtaqueEnemigo.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
-        turnoA.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
+        turno.appendChild(turnoA)
+        ataquesJugador.appendChild(nuevoAtaqueJugador)
+        ataquesEnemigo.appendChild(nuevoAtaqueEnemigo)
+        if (resultadosAtaques[i][3] === "PERDISTE") {
+            resultadoA.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
+            nuevoAtaqueJugador.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
+            nuevoAtaqueEnemigo.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
+            turnoA.style.backgroundColor = "rgba(216, 31, 95, 0.4)"
+        }else if (resultadosAtaques[i][3] === "GANASTE") {
+            resultadoA.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
+            nuevoAtaqueJugador.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
+            nuevoAtaqueEnemigo.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
+            turnoA.style.backgroundColor = "rgba(64, 216, 31, 0.4)"
+        }else {
+            resultadoA.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
+            nuevoAtaqueJugador.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
+            nuevoAtaqueEnemigo.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
+            turnoA.style.backgroundColor = "rgba(31, 216, 185, 0.4)"
+        }
+        resultadoAtaque.appendChild(resultadoA)
     }
-    resultadoAtaque.appendChild(resultadoA)
+    
 }
 
 function crearMensajeFinal(resultadoFinal) {
