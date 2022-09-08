@@ -12,6 +12,7 @@ const spanVictoriasJugador = document.getElementById('victorias-jugador')
 const spanVictoriasEnemigo = document.getElementById('victorias-enemigo')
 
 const turno = document.getElementById('turno')
+// const ataques = document.getElementById('ataques')
 const ataquesJugador = document.getElementById('ataques-jugador')
 const ataquesEnemigo = document.getElementById('ataques-enemigo')
 const resultadoAtaque = document.getElementById('resultadoAtaque')
@@ -446,34 +447,36 @@ function mostrarAtaques(ataquesPersonaje) {
     botones= document.querySelectorAll('.BAtaque')
 }
 
+function clearBox(elementID) { 
+    console.log("borrar", elementID);
+    document.getElementById(elementID).innerHTML = ""; 
+}
+
 function SeleccionarBotonAtaque() {
     botones.forEach((boton) => {
         boton.addEventListener('click', (e) => {
             if (e.target.textContent === 'piedra' || e.target.alt === 'piedra') {
                 ataqueJugador.push('PIEDRA')
-                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'papel' || e.target.alt === 'papel') {
                 ataqueJugador.push('PAPEL')
-                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'tijera' || e.target.alt === 'tijera') {
                 ataqueJugador.push('TIJERA')
-                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'lagarto' || e.target.alt === 'lagarto') {
                 ataqueJugador.push('LAGARTO')
-                // ataqueAleatorioEnemigo()
             }
             if (e.target.textContent === 'spock' || e.target.alt === 'spock') {
                 ataqueJugador.push('SPOCK')
-                // ataqueAleatorioEnemigo()
             }
 
-            console.log("SeleccionarBotonAtaque-ataqueJugador", ataqueJugador)
+            // document.getElementById('ataques').innerHTML=""
+
+           console.log("SeleccionarBotonAtaque-ataqueJugador", ataqueJugador)
             // ataqueAleatorioEnemigo()
             if(ataqueJugador.length > 0) {
-                console.log("ataqueJugador > 0", ataqueJugador)
+                // console.log("ataqueJugador > 0", ataqueJugador)
                 enviarAtaques()
             }
         })
@@ -492,8 +495,9 @@ function enviarAtaques() {
     })
 
     // console.log("enviarAtaques-ataques", ataques)
-    if(victoriasEnemigo !=5 || victoriasJugador != 5) {
-        intervalo = setInterval(obtenerAtaques, 50)
+    if((victoriasEnemigo < 5 && ataqueJugador.length > 0) || (victoriasJugador < 5 && ataqueJugador.length > 0 )) {
+        // intervalo = setInterval(obtenerAtaques, 50)
+        obtenerAtaques()
     }
 }
 
@@ -515,11 +519,13 @@ function obtenerAtaques() {
             if (res.ok) {
                 res.json()
                     .then(function({ ataques }) {
-                        console.log("ataques.length", ataques.length)
-                        console.log("victoriasEnemigo ", victoriasEnemigo )
-                        if(victoriasEnemigo != 5 || victoriasJugador != 5){
-                            ataqueEnemigo = ataques
-                            combate()
+                        // console.log("ataques.length", ataques.length)
+                            if(ataques.length > 0) {
+                                // console.log("victoriasEnemigo ", victoriasEnemigo )
+                                ataqueEnemigo = ataques
+                                if(victoriasEnemigo != 5 || victoriasJugador != 5){
+                                    combate()
+                                }
                         }
                     })
             }
@@ -553,31 +559,40 @@ function extraerAtaquesEnemigo(personajeJugador) {
 function combate() {
     console.log("combate-ataqueEnemigo", ataqueEnemigo);
     contadorTurno += 1
-    if (ataqueEnemigo == ataqueJugador[ataqueJugador.length - 1]) {
-        crearMensaje("EMPATE");
-    } else if (
-        (ataqueJugador[ataqueJugador.length - 1] == 'PIEDRA' &&  ataqueEnemigo == 'TIJERA') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'PIEDRA' &&  ataqueEnemigo == 'LAGARTO') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'PAPEL' &&  ataqueEnemigo == 'PIEDRA') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'PAPEL' &&  ataqueEnemigo == 'SPOCK') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'TIJERA' &&  ataqueEnemigo == 'PAPEL') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'TIJERA' &&  ataqueEnemigo == 'LAGARTO') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'LAGARTO' &&  ataqueEnemigo == 'SPOCK') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'LAGARTO' &&  ataqueEnemigo == 'PAPEL') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'SPOCK' &&  ataqueEnemigo == 'TIJERA') ||
-        (ataqueJugador[ataqueJugador.length - 1] == 'SPOCK' &&  ataqueEnemigo == 'PIEDRA')
-    ) {
-        crearMensaje("GANASTE");
-        victoriasJugador++
-    } else {
-        // perdidas++;
-        crearMensaje("PERDISTE");
-        victoriasEnemigo++
+    for (let index = 0; index < ataqueEnemigo.length; index++) {
+        console.log("ataqueEnemigo[index]", ataqueEnemigo[index]);
+        console.log("ataqueJugador[index]", ataqueJugador[index]);
+        if (ataqueEnemigo[index] == ataqueJugador[index]) {
+            crearMensaje("EMPATE", index);
+        } else if (
+            (ataqueJugador[index] == 'PIEDRA' &&  ataqueEnemigo[index] == 'TIJERA') ||
+            (ataqueJugador[index] == 'PIEDRA' &&  ataqueEnemigo[index] == 'LAGARTO') ||
+            (ataqueJugador[index] == 'PAPEL' &&  ataqueEnemigo[index] == 'PIEDRA') ||
+            (ataqueJugador[index] == 'PAPEL' &&  ataqueEnemigo[index] == 'SPOCK') ||
+            (ataqueJugador[index] == 'TIJERA' &&  ataqueEnemigo[index] == 'PAPEL') ||
+            (ataqueJugador[index] == 'TIJERA' &&  ataqueEnemigo[index] == 'LAGARTO') ||
+            (ataqueJugador[index] == 'LAGARTO' &&  ataqueEnemigo[index] == 'SPOCK') ||
+            (ataqueJugador[index] == 'LAGARTO' &&  ataqueEnemigo[index] == 'PAPEL') ||
+            (ataqueJugador[index] == 'SPOCK' &&  ataqueEnemigo[index] == 'TIJERA') ||
+            (ataqueJugador[index] == 'SPOCK' &&  ataqueEnemigo[index] == 'PIEDRA')
+        ) {
+            crearMensaje("GANASTE" , index);
+            victoriasJugador++
+        } else {
+            // perdidas++;
+            crearMensaje("PERDISTE", index);
+            victoriasEnemigo++
+        }
+        // console.log("Combate: ", victoriasJugador)
+        spanVictoriasJugador.innerHTML = victoriasJugador
+        spanVictoriasEnemigo.innerHTML = victoriasEnemigo
+    
+        // console.log("victoriasEnemigo == 5", victoriasEnemigo == 5);
+    
+        if(victoriasEnemigo == 5 || victoriasJugador == 5) {
+            revisarVidas()
+        }
     }
-    // console.log("Combate: ", victoriasJugador)
-    spanVictoriasJugador.innerHTML = victoriasJugador
-    spanVictoriasEnemigo.innerHTML = victoriasEnemigo
-    revisarVidas()
 }
 
 function revisarVidas() {
@@ -589,13 +604,13 @@ function revisarVidas() {
         crearMensajeFinal("Lo siento, Perdiste")
         clearInterval(intervalo)
     }
-    if(victoriasEnemigo != 5 || victoriasJugador != 5){
-        console.log("envio ataques");
-    //     enviarAtaques()
-    }
+    // if(victoriasEnemigo != 5 || victoriasJugador != 5){
+    //     console.log("envio ataques");
+    // //     enviarAtaques()
+    // }
 }
 
-function crearMensaje(resultado) {
+function crearMensaje(resultado, index) {
     let nuevoAtaqueJugador = document.createElement('p')
     let nuevoAtaqueEnemigo = document.createElement('p')
     let resultadoA = document.createElement('p')
@@ -603,8 +618,9 @@ function crearMensaje(resultado) {
 
     turnoA.innerHTML = "Turno " + contadorTurno + ":"
     // sectionMensaje.innerHTML = resultado
-    nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo
-    nuevoAtaqueJugador.innerHTML = ataqueJugador[ataqueJugador.length - 1]
+    // console.log("ataqueEnemigo[ataqueEnemigo.length - 1]", ataqueEnemigo[ataqueEnemigo.length - 1])
+    nuevoAtaqueEnemigo.innerHTML = ataqueEnemigo[index]
+    nuevoAtaqueJugador.innerHTML = ataqueJugador[index]
     resultadoA.innerHTML = resultado
 
     turno.appendChild(turnoA)
