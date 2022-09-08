@@ -55,6 +55,9 @@ app.post("/thebig/:jugadorId", (req, res) => {
         jugadores[jugadorIndex].asignarJugador(personaje)
     }
 
+    console.log(jugadores)
+    console.log(jugadorId)  
+
     res.end()
 })
 
@@ -95,7 +98,7 @@ app.get("/thebig/:jugadorId/ataques", (req, res) => {
     const jugador = jugadores.find((jugador) => jugador.id === jugadorId)
 
     res.send({
-        ataques: jugador.ataques || ""
+        ataques: jugador.ataques || []
     })
 })
 

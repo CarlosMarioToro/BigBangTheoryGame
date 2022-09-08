@@ -237,6 +237,8 @@ function seleccionarPersonajeJugador() {
         return
     }
 
+    //CON ESTO PUEDO SOLUCIONAR LOS ATAQUES 
+
     seleccionarPersonaje(personajeJugador)
 
     sectionSeleccionarPersonaje.style.display = 'none'
@@ -482,15 +484,30 @@ function enviarAtaques() {
     fetch(`http://localhost:8080/thebig/${jugadorId}/ataques`, {
         method: "post",
         headers: {
-            "Content-Type": "application-json"
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
             ataques : ataqueJugador
         })
     })
 
-    intervalo = setInterval(obtenerAtaques, 50)
+    // console.log("enviarAtaques-ataques", ataques)
+    if(victoriasEnemigo !=5 || victoriasJugador != 5) {
+        intervalo = setInterval(obtenerAtaques, 50)
+    }
 }
+
+// function seleccionarPersonaje(personajeJugador) {
+//     fetch(`http://localhost:8080/thebig/${jugadorId}`, {
+//         method:"post",
+//         headers: {
+//             "Content-Type" : "application/json"
+//         },
+//         body: JSON.stringify({
+//             personaje: personajeJugador
+//         })
+//     })
+// }
 
 function obtenerAtaques() {
     fetch(`http://localhost:8080/thebig/${enemigoId}/ataques`)
@@ -499,7 +516,8 @@ function obtenerAtaques() {
                 res.json()
                     .then(function({ ataques }) {
                         console.log("ataques.length", ataques.length)
-                        if(ataques.length > 1){
+                        console.log("victoriasEnemigo ", victoriasEnemigo )
+                        if(victoriasEnemigo != 5 || victoriasJugador != 5){
                             ataqueEnemigo = ataques
                             combate()
                         }
@@ -531,24 +549,6 @@ function extraerAtaquesEnemigo(personajeJugador) {
         }
     }
 }
-
-// function ataqueAleatorioEnemigo() {
-//     let ataqueAleatorio = aleatorio(0, ataquesPersonaje.length -1)
-
-//     if (ataquesPersonaje[ataqueAleatorio].nombre === 'piedra') {
-//         ataqueEnemigo = 'PIEDRA'
-//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'papel') {
-//         ataqueEnemigo = 'PAPEL'
-//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'tijera') {
-//         ataqueEnemigo = 'TIJERA'
-//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'lagarto') {
-//         ataqueEnemigo = 'LAGARTO'
-//     }else if (ataquesPersonaje[ataqueAleatorio].nombre === 'spock') {
-//         ataqueEnemigo = 'SPOCK'
-//     }
-
-//     combate()
-// }
 
 function combate() {
     console.log("combate-ataqueEnemigo", ataqueEnemigo);
@@ -588,6 +588,10 @@ function revisarVidas() {
     }else if (victoriasEnemigo == 5) {
         crearMensajeFinal("Lo siento, Perdiste")
         clearInterval(intervalo)
+    }
+    if(victoriasEnemigo != 5 || victoriasJugador != 5){
+        console.log("envio ataques");
+    //     enviarAtaques()
     }
 }
 
