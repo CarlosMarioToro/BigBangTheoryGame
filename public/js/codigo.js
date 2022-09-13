@@ -197,7 +197,7 @@ function iniciarJuego() {
 }
 
 function unirseAlJuego() {
-    fetch("http://192.168.1.14:8080/unirse")
+    fetch("http://192.168.1.17:8080/unirse")
     .then(function (res) {
         if (res.ok) {
             res.text()
@@ -255,7 +255,7 @@ function seleccionarPersonajeJugador() {
 }
 
 function seleccionarPersonaje(personajeJugador) {
-    fetch(`http://192.168.1.14:8080/thebig/${jugadorId}`, {
+    fetch(`http://192.168.1.17:8080/thebig/${jugadorId}`, {
         method:"post",
         headers: {
             "Content-Type" : "application/json"
@@ -297,7 +297,7 @@ function pintarCanvas() {
 }
 
 function enviarPosicion(x, y) {
-    fetch(`http://192.168.1.14:8080/thebig/${jugadorId}/posicion`, {
+    fetch(`http://192.168.1.17:8080/thebig/${jugadorId}/posicion`, {
         method:"post",
         headers: {
             "Content-Type" : "application/json"
@@ -485,7 +485,7 @@ function SeleccionarBotonAtaque() {
 }
 
 function enviarAtaques() {
-    fetch(`http://192.168.1.14:8080/thebig/${jugadorId}/ataques`, {
+    fetch(`http://192.168.1.17:8080/thebig/${jugadorId}/ataques`, {
         method: "post",
         headers: {
             "Content-Type": "application/json"
@@ -515,7 +515,7 @@ function enviarAtaques() {
 // }
 
 function obtenerAtaques() {
-    fetch(`http://192.168.1.14:8080/thebig/${enemigoId}/ataques`)
+    fetch(`http://192.168.1.17:8080/thebig/${enemigoId}/ataques`)
         .then(function (res) {
             if (res.ok) {
                 res.json()
